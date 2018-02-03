@@ -39,7 +39,7 @@
         console.log(key, keyPath);
       },
       getDatabase() {
-          this.axios.post('http://localhost:3000/home/getAll')
+        this.axios.post('http://localhost:3000/home/getAll')
         .then( (data) => {
             if( data.data.state ) {
                 this.dbList = data.data.msg;
