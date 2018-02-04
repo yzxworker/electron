@@ -1,12 +1,12 @@
 <template>
     <div class="centerIn">
-        <el-menu class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
+        <el-menu class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" router>
             <el-submenu index="1">
                 <template slot="title">
                     <i class="el-icon-location"></i>
                     <span slot="title">数据库</span>
                 </template>
-                <el-menu-item v-for="(item,index) in dbList" :index="item" :key="index">
+                <el-menu-item v-for="(item,index) in dbList" :index="'/home/baselist'" :key="index" >
                    {{ item }}
                 </el-menu-item>
             </el-submenu>
@@ -19,6 +19,7 @@
                 <span slot="title">导航三</span>
             </el-menu-item>
         </el-menu>
+        <router-view></router-view>
     </div>
 </template>
 
@@ -38,6 +39,9 @@
       handleClose(key, keyPath) {
         console.log(key, keyPath);
       },
+      handleClick( item ) {
+          console.log(item);
+      }, 
       getDatabase() {
         this.axios.post('http://localhost:3000/home/getAll')
         .then( (data) => {

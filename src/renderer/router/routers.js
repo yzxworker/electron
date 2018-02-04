@@ -1,15 +1,20 @@
 import Login from '../components/login';
 import Home from '../components/home';
+import BaseList from '../components/baselist';
 const routes = [
     {
       path: '/',
-      name: 'login',
       component: Login
     },
     {
       path: '/home',
-      name: 'login',
-      component: Home
+      component: Home,
+      children: [
+        {
+          path: '/baselist',
+          component: BaseList
+        }
+      ]
     }
   ]
   

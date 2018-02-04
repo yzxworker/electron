@@ -1,12 +1,18 @@
 <template>
   <div id="app">
+      <el-button class="entrywidth" type="primary" @click="history">返回</el-button>
       <router-view></router-view>
   </div>
 </template>
 
 <script>
 export default {
-	name: 'SQL'
+  name: 'SQL',
+  methods: {
+    history(){
+      this.$router.push('/');
+    }
+  }
   }
 </script>
 

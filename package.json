@@ -19,7 +19,7 @@
     "dev": "concurrently \"npm run server\" \"npm run start:dev\""
   },
   "build": {
-    "productName": "my-project",
+    "productName": "数据库管理",
     "appId": "org.simulatedgreg.electron-vue",
     "directories": {
       "output": "build"
