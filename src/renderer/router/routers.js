@@ -11,7 +11,7 @@ const routes = [
       component: Home,
       children: [
         {
-          path: '/baselist',
+          path: '/home/baselist/:basename',
           component: BaseList
         }
       ]

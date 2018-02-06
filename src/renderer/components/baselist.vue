@@ -9,7 +9,7 @@
   export default {
     name: 'baselist',
     created() {
-        console.log(window.location);
+        console.log(this.$route.params);
     }
   }
 </script>

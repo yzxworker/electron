@@ -6,7 +6,7 @@
                     <i class="el-icon-location"></i>
                     <span slot="title">数据库</span>
                 </template>
-                <el-menu-item v-for="(item,index) in dbList" :index="'/home/baselist'" :key="index" >
+                <el-menu-item v-for="(item,index) in dbList" :index="'/home/baselist/'+item" :key="index" >
                    {{ item }}
                 </el-menu-item>
             </el-submenu>
