@@ -9,7 +9,7 @@ module.exports = function() {
         const db = mysql.createConnection({
             host: 'localhost',
             user: 'root',
-            password: 'root'
+            password: ''
         });
         const dbList = []; 
         db.connect();

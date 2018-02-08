@@ -2,7 +2,7 @@ const express = require('express');
 const mysql = require('mysql');
 const libs = require('../libs/md5');
 
-var db=mysql.createPool({host: 'localhost', user: 'root', password: 'root', database: 'guitar'});
+var db=mysql.createPool({host: 'localhost', user: 'root', password: '', database: 'guitar'});
 
 module.exports=function (){
   var router=express.Router();

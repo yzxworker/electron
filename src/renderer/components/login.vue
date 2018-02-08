@@ -44,7 +44,7 @@
 		register(ruleForm) {
 			this.$refs[ruleForm].validate((valid) => {
 				if (valid) {
-					this.axios.post('http://localhost:3000/admin/register',{
+					this.axios.post('http://59.110.163.181:3000/admin/register',{
 						username: this.ruleForm.username,
 						password: this.ruleForm.password
 					})
@@ -76,7 +76,7 @@
 		login(ruleForm){
 			this.$refs[ruleForm].validate((valid) => {
 				if (valid) {
-					this.axios.post('http://localhost:3000/admin/login',{
+					this.axios.post('http://59.110.163.181:3000/admin/login',{
 						username: this.ruleForm.username,
 						password: this.ruleForm.password
 					})
