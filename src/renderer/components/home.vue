@@ -19,8 +19,8 @@
                         <i class="el-icon-location"></i>
                         <span slot="title">用户</span></span>
                     </template>
-                    <el-menu-item :index="'/home/baselist/'" >用户列表</el-menu-item>
-                    <el-menu-item :index="'/home/writeanarticle/'" >用户管理</el-menu-item>
+                    <el-menu-item :index="'/home/userlist/'" >用户列表</el-menu-item>
+                    <el-menu-item :index="'/home/user/'" >用户管理</el-menu-item>
                 </el-submenu>
                 <el-menu-item index="3">
                     <i class="el-icon-more"></i>
@@ -28,9 +28,7 @@
                 </el-menu-item>
             </el-menu>
         </el-aside>
-        <el-main>
-            <router-view></router-view>
-        </el-main>
+        <router-view></router-view>
     </el-container>
 </template>
 

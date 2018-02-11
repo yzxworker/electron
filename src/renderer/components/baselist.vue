@@ -1,5 +1,27 @@
 <template>
-        <VueEditor v-model="content" class="editor" placeholder="请输入文章"></VueEditor>
+    <el-table
+    :data="tableData"
+    border
+    style="width: 100%">
+    <el-table-column
+      prop="time"
+      label="时间"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="author"
+      label="作者"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="title"
+      label="标题">
+    </el-table-column>
+    <el-table-column
+      prop="abstract"
+      label="简介">
+    </el-table-column>
+  </el-table>
 </template>
 
 <script>
@@ -9,8 +31,24 @@ import { VueEditor } from 'vue2-editor'
     components:{ VueEditor },
     data() {
         return {
-            content: ''
+            tableData: []
         }
+    },
+    created() {
+        this.axios.post('/article/getAll')
+        .then( (data) => {
+            if( data.data.state ) {
+                const datas = data.data.msg;
+                datas.map( ( item ) => {
+                    const table = {};
+                    table.time = item.time;
+                    table.author = item.author;
+                    table.title = item.title;
+                    table.abstract = item.abstract;
+                    this.tableData.push( table );
+                } );
+            }
+        } )
     }
   }
 </script>

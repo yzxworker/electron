@@ -6,10 +6,18 @@ module.exports = function() {
 
     //获取所有数据库
     router.post( '/getAll', ( req, res ) => {
+        // 服务器
+        // const db = mysql.createConnection({
+        //     host: 'localhost',
+        //     user: 'root',
+        //     password: ''
+        // });
+        
+        // 本地
         const db = mysql.createConnection({
             host: 'localhost',
             user: 'root',
-            password: ''
+            password: 'root'
         });
         const dbList = []; 
         db.connect();

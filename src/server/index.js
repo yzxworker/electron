@@ -40,3 +40,4 @@ server.use(cookieParser());
 // server router
 server.use('/admin/', require('./admin/admin')());
 server.use('/home/', require('./home/home')());
+server.use('/article/', require('./article/article')());

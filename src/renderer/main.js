@@ -5,11 +5,6 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 import router from './router';
 
-// vue-ueditor
-import '../../static/UE/ueditor.config.js'
-import '../../static/UE/ueditor.all.min.js'
-import '../../static/UE/lang/zh-cn/zh-cn.js'
-import '../../static/UE/ueditor.parse.min.js'
 
 
 
@@ -17,6 +12,8 @@ import App from './App';
 
 Vue.use(Element, { size: 'small' });
 axios.defaults.headers.post['Content-Type'] = 'application/json';
+// axios.defaults.baseURL = "http://59.110.163.181:3000"; //服务器
+axios.defaults.baseURL = "http://localhost:3000"; //本地
 axios.defaults.withCredentials = true; //允许设置 cookie
 Vue.use(VueAxios, axios); 
 
