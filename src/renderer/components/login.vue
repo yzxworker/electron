@@ -86,8 +86,8 @@
 								showClose: true,
 								message: '登录成功',
 								type: 'success'
-                            });
-                            this.$router.push('/home');
+							});
+							this.$router.push('/home');
 						} else {
 							this.$message({
 								showClose: true,

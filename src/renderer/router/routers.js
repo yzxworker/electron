@@ -1,6 +1,8 @@
 import Login from '../components/login';
 import Home from '../components/home';
 import BaseList from '../components/baselist';
+import Writer from '../components/writer'
+
 const routes = [
     {
       path: '/',
@@ -11,9 +13,13 @@ const routes = [
       component: Home,
       children: [
         {
-          path: '/home/baselist/:basename',
+          path: '/home/baselist/',
           component: BaseList
-        }
+        },
+        {
+          path: '/home/writeanarticle',
+          component: Writer
+        },
       ]
     }
   ]
