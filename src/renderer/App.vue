@@ -18,4 +18,14 @@ export default {
 
 <style scoped>
 @import url('../layout/base.css');
+.entrywidth{ 
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+ }
+
+ #app {
+   height: 100%;
+ }
 </style>

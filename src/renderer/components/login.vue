@@ -1,6 +1,6 @@
 <template>
     <div class="centerIn">
-		<h2 class="title">数据库管理系统</h2>
+		<h2 class="title">系统</h2>
 		<el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
 			<el-form-item prop="username">
 				<el-input placeholder="账号" v-model="ruleForm.username" />
