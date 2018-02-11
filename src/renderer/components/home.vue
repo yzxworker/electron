@@ -43,7 +43,7 @@
           console.log(item);
       }, 
       getDatabase() {
-        this.axios.post('http://localhost:3000/home/getAll')
+        this.axios.post('http://59.110.163.181:3000/home/getAll')
         .then( (data) => {
             if( data.data.state ) {
                 this.dbList = data.data.msg;
