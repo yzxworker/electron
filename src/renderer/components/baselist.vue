@@ -1,37 +1,60 @@
 <template>
-    <el-table
-    :data="tableData"
-    border
-    style="width: 100%">
-    <el-table-column
-      prop="time"
-      label="时间"
-      width="180">
-    </el-table-column>
-    <el-table-column
-      prop="author"
-      label="作者"
-      width="180">
-    </el-table-column>
-    <el-table-column
-      prop="title"
-      label="标题">
-    </el-table-column>
-    <el-table-column
-      prop="abstract"
-      label="简介">
-    </el-table-column>
-  </el-table>
+    <el-container>
+        <el-header>
+
+        </el-header>
+        <el-main>
+            <el-table
+                :data="tableData"
+                border
+                style="width: 100%">
+                <el-table-column
+                sortable
+                :sort-method="handleSort"
+                prop="time"
+                label="时间"
+                width="180">
+                </el-table-column>
+                <el-table-column
+                prop="author"
+                label="作者"
+                width="180">
+                </el-table-column>
+                <el-table-column
+                    label="标题"
+                >
+                    <template slot-scope="scope">
+                        <router-link to="/">{{ scope.row.title }}</router-link>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                prop="abstract"
+                label="简介">
+                </el-table-column>
+            </el-table>
+        </el-main>
+        <el-footer>
+        </el-footer>
+    </el-container>
+    
 </template>
 
 <script>
-import { VueEditor } from 'vue2-editor'
+import { VueEditor } from 'vue2-editor';
+import moment from 'moment';
   export default {
     name: 'baselist',
     components:{ VueEditor },
     data() {
         return {
             tableData: []
+        }
+    },
+    methods: {
+        handleSort(a, b) {
+            const next = moment(a.time,'YYYY年MM月DD日,hh:mm:ss')._d.getTime();
+            const last = moment(b.time,'YYYY年MM月DD日,hh:mm:ss')._d.getTime();
+            return next - last;
         }
     },
     created() {
@@ -41,7 +64,7 @@ import { VueEditor } from 'vue2-editor'
                 const datas = data.data.msg;
                 datas.map( ( item ) => {
                     const table = {};
-                    table.time = item.time;
+                    table.time = moment(item.time).format('YYYY年MM月DD日,hh:mm:ss');
                     table.author = item.author;
                     table.title = item.title;
                     table.abstract = item.abstract;
