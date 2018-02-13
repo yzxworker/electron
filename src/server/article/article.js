@@ -13,7 +13,8 @@ const db = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: 'root',
-    database: "guitar"
+    database: "guitar",
+    multipleStatements: true
 });
 
 module.exports = function() {
@@ -21,14 +22,15 @@ module.exports = function() {
 
     //获取所有文章列表
     router.post( '/getAll', ( req, res ) => {
-        
-        db.query("SELECT *  FROM article_table ORDER BY time LIMIT 0, 20",(err,results) => {
+        const pageStart = req.body.pagemark - 1;
+        const size = req.body.pagesize;
+        db.query(`SELECT COUNT(*) FROM article_table; SELECT *  FROM article_table ORDER BY time LIMIT ${ pageStart * size }, ${ size }`,(err,results) => {
             if(err){
                 res.send({state: false, err: 500, msg: '数据库错误'}).end();
                 throw err;
             }
             if(results){
-                res.send({state: true, msg: results}).end();
+                res.send({state: true, msg: results[1], count: results[0] }).end();
             }  
         })
     } );
@@ -44,7 +46,7 @@ module.exports = function() {
                 throw err;
             }
             if(results){
-                res.send({state: true, msg: '发表成功'}).end();
+                res.send({state: true, msg: '发表成功', id: results.insertId }).end();
             }  
         })
     } );

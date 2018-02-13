@@ -31,6 +31,15 @@ import { VueEditor } from 'vue2-editor'
             })
             .then( (data) => {
                 console.log( data.data );
+                if( data.data.state ) {
+                    this.$message({
+                        showClose: true,
+                        message: data.data.msg,
+                        type: 'success'
+                    });
+                // this.$router.push('/home/showarticle/');
+                this.$router.push( { name: 'ArticlePage', params: { articleID: data.data.id } } );
+                }
             } )
         }
     },

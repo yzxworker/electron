@@ -21,7 +21,7 @@
                     label="标题"
                 >
                     <template slot-scope="scope">
-                        <router-link class="listlink" :to="'/home/showarticle/'+scope.row.id">{{ scope.row.title }}</router-link>
+                        <router-link class="titlelink" :to="'/home/showarticle/'+scope.row.id">{{ scope.row.title }}</router-link>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -31,6 +31,16 @@
             </el-table>
         </el-main>
         <el-footer>
+            <el-pagination
+                class="article-pagination"
+                background
+                layout="sizes, prev, pager, next"
+                :total="total"
+                :page-size="size"
+                @size-change="handleSizeChange"
+                @current-change="hnadleCurrent"
+            >
+            </el-pagination>
         </el-footer>
     </el-container>
     
@@ -44,7 +54,9 @@ import moment from 'moment';
     components:{ VueEditor },
     data() {
         return {
-            tableData: []
+            tableData: [],
+            total: 0,
+            size: 20
         }
     },
     methods: {
@@ -52,24 +64,40 @@ import moment from 'moment';
             const next = moment(a.time,'YYYY年MM月DD日,hh:mm:ss')._d.getTime();
             const last = moment(b.time,'YYYY年MM月DD日,hh:mm:ss')._d.getTime();
             return next - last;
+        },
+        handleGetArticle( mark ) {
+            this.axios.post('/article/getAll',{
+                pagemark: mark,
+                pagesize: this.size
+            })
+            .then( (data) => {
+                if( data.data.state ) {
+                    const datas = data.data.msg;
+                    this.total = data.data.count[0]['COUNT(*)'];
+                    const tableData = []
+                    datas.map( ( item ) => {
+                        const table = {};
+                        table.time = moment(item.time).format('YYYY年MM月DD日,hh:mm:ss');
+                        table.id = item.id
+                        table.author = item.author;
+                        table.title = item.title;
+                        table.abstract = item.abstract;
+                        tableData.push( table );
+                    } );
+                    this.tableData = tableData;
+                }
+            } )
+        },
+        hnadleCurrent( mark ) {
+            this.handleGetArticle( mark );
+        },
+        handleSizeChange( size ) {
+            this.size = size;
+            this.handleGetArticle( 1 );
         }
     },
     created() {
-        this.axios.post('/article/getAll')
-        .then( (data) => {
-            if( data.data.state ) {
-                const datas = data.data.msg;
-                datas.map( ( item ) => {
-                    const table = {};
-                    table.time = moment(item.time).format('YYYY年MM月DD日,hh:mm:ss');
-                    table.id = item.id
-                    table.author = item.author;
-                    table.title = item.title;
-                    table.abstract = item.abstract;
-                    this.tableData.push( table );
-                } );
-            }
-        } )
+        this.handleGetArticle( 1 );
     }
   }
 </script>
@@ -78,8 +106,12 @@ import moment from 'moment';
 .editor {
     height: 100%;
 }
-.listlink {
+.titlelink {
     text-decoration: none;
     color: #000;
 }
+.article-pagination {
+    text-align: center;
+    margin-top: 10px;
+ }
 </style>

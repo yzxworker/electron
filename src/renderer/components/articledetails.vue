@@ -44,6 +44,7 @@
 <style scoped>
 .ql-container {
     height: auto;
+    border: none;
 }
 .article-title {
     text-align: center;

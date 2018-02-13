@@ -23,7 +23,8 @@ const routes = [
         },
         {
           path: '/home/showarticle/:articleID',
-          component: Articledetails
+          component: Articledetails,
+          name: "ArticlePage"
         }
       ]
     }
