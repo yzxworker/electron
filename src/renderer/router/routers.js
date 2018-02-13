@@ -1,7 +1,8 @@
 import Login from '../components/login';
 import Home from '../components/home';
 import BaseList from '../components/baselist';
-import Writer from '../components/writer'
+import Writer from '../components/writer';
+import Articledetails from '../components/articledetails';
 
 const routes = [
     {
@@ -20,6 +21,10 @@ const routes = [
           path: '/home/writeanarticle',
           component: Writer
         },
+        {
+          path: '/home/showarticle/:articleID',
+          component: Articledetails
+        }
       ]
     }
   ]

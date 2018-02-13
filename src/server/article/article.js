@@ -49,6 +49,22 @@ module.exports = function() {
         })
     } );
 
+    // 获取具体文章
+    router.post( '/getArticle', ( req, res ) => {
+        const ID = req.body.id;
+        const REG_DB = `SELECT * FROM article_table WHERE id='${ ID }'`;
+
+        db.query( REG_DB, ( err, results ) => {
+            if(err){
+                res.send({state: false, err: 500, msg: '数据库错误'}).end();
+                throw err;
+            }
+            if( results ){
+                res.send( { state: true, msg: results[0] } ).end();
+            }  
+        } );
+    } );
+
     return router;
 }
 

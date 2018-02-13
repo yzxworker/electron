@@ -1,8 +1,5 @@
 <template>
     <el-container>
-        <el-header>
-
-        </el-header>
         <el-main>
             <el-table
                 :data="tableData"
@@ -24,7 +21,7 @@
                     label="标题"
                 >
                     <template slot-scope="scope">
-                        <router-link to="/">{{ scope.row.title }}</router-link>
+                        <router-link class="listlink" :to="'/home/showarticle/'+scope.row.id">{{ scope.row.title }}</router-link>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -65,6 +62,7 @@ import moment from 'moment';
                 datas.map( ( item ) => {
                     const table = {};
                     table.time = moment(item.time).format('YYYY年MM月DD日,hh:mm:ss');
+                    table.id = item.id
                     table.author = item.author;
                     table.title = item.title;
                     table.abstract = item.abstract;
@@ -79,5 +77,9 @@ import moment from 'moment';
 <style scoped>
 .editor {
     height: 100%;
+}
+.listlink {
+    text-decoration: none;
+    color: #000;
 }
 </style>
