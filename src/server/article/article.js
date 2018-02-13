@@ -83,7 +83,24 @@ module.exports = function() {
                 res.send({state: true, msg: '修改成功', id: ID }).end();
             }  
         })
-    } )
+    } );
+
+    // 删除数据
+    router.post( '/delete', ( req, res ) => {
+        const ID = req.body.id;
+        const pageStart = req.body.pagemark - 1;
+        const size = req.body.pagesize;
+        const REG_DB = `DELETE FROM article_table WHERE id = ${ ID }; SELECT *  FROM article_table ORDER BY time LIMIT ${ pageStart * size }, ${ size }`;
+        db.query(REG_DB,(err,results) => {
+            if(err){
+                res.send({state: false, err: 500, msg: '数据库错误'}).end();
+                throw err;
+            }
+            if(results){
+                res.send({state: true, msg: '删除成功', id: ID, articles: results[1] }).end();
+            }  
+        })
+    } );
 
     return router;
 }

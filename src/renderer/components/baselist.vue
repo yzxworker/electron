@@ -34,7 +34,7 @@
                         <el-button
                         size="mini"
                         type="danger"
-                        @click="handleDelete( scope.row)">删除</el-button>
+                        @click="handleDelete( scope.$index, scope.row )">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -65,7 +65,8 @@ import moment from 'moment';
         return {
             tableData: [],
             total: 0,
-            size: 20
+            size: 20,
+            mark: 1
         }
     },
     methods: {
@@ -75,6 +76,7 @@ import moment from 'moment';
             return next - last;
         },
         handleGetArticle( mark ) {
+            this.mark = mark;
             this.axios.post('/article/getAll',{
                 pagemark: mark,
                 pagesize: this.size
@@ -107,8 +109,33 @@ import moment from 'moment';
         handleEdit( rowData ) {
             this.$router.push( { name: 'writeanarticle', params: { articleID: rowData.id } } );
         },
-        handleDelete( rowData ) {
-
+        handleDelete( index, rowData ) {
+            this.axios.post('/article/delete',{
+                id: rowData.id,
+                pagemark: this.mark,
+                pagesize: this.size
+            })
+            .then( (data) => {
+                if( data.data.state ) {
+                    const datas = data.data.articles;
+                    const tableData = []
+                    datas.map( ( item ) => {
+                        const table = {};
+                        table.time = moment(item.time).format('YYYY年MM月DD日 HH:mm:ss');
+                        table.id = item.id
+                        table.author = item.author;
+                        table.title = item.title;
+                        table.abstract = item.abstract;
+                        tableData.push( table );
+                    } );
+                    this.tableData = tableData;
+                    this.$message({
+                        showClose: true,
+                        message: data.data.msg,
+                        type: 'success'
+                    });
+                } 
+            } )
         }
     },
     created() {
