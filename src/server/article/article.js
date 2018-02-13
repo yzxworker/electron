@@ -67,6 +67,24 @@ module.exports = function() {
         } );
     } );
 
+    // 更新数据
+    router.post( '/update', ( req, res ) => {
+        const ID = req.body.id;
+        const title = req.body.title;
+        const content = req.body.content;
+        const time = new Date().getTime();
+        const REG_DB = `UPDATE article_table SET title = '${ title }',content = '${ content }',time = '${ time }', author = 'admin' WHERE id = ${ ID }`;
+        db.query(REG_DB,(err,results) => {
+            if(err){
+                res.send({state: false, err: 500, msg: '数据库错误'}).end();
+                throw err;
+            }
+            if(results){
+                res.send({state: true, msg: '修改成功', id: ID }).end();
+            }  
+        })
+    } )
+
     return router;
 }
 

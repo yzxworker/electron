@@ -25,8 +25,17 @@
                     </template>
                 </el-table-column>
                 <el-table-column
-                prop="abstract"
-                label="简介">
+                width="160"
+                label="操作">
+                    <template slot-scope="scope">
+                        <el-button
+                        size="mini"
+                        @click="handleEdit( scope.row)">编辑</el-button>
+                        <el-button
+                        size="mini"
+                        type="danger"
+                        @click="handleDelete( scope.row)">删除</el-button>
+                    </template>
                 </el-table-column>
             </el-table>
         </el-main>
@@ -61,8 +70,8 @@ import moment from 'moment';
     },
     methods: {
         handleSort(a, b) {
-            const next = moment(a.time,'YYYY年MM月DD日,hh:mm:ss')._d.getTime();
-            const last = moment(b.time,'YYYY年MM月DD日,hh:mm:ss')._d.getTime();
+            const next = moment(a.time,'YYYY年MM月DD日 HH:mm:ss')._d.getTime();
+            const last = moment(b.time,'YYYY年MM月DD日 HH:mm:ss')._d.getTime();
             return next - last;
         },
         handleGetArticle( mark ) {
@@ -77,7 +86,7 @@ import moment from 'moment';
                     const tableData = []
                     datas.map( ( item ) => {
                         const table = {};
-                        table.time = moment(item.time).format('YYYY年MM月DD日,hh:mm:ss');
+                        table.time = moment(item.time).format('YYYY年MM月DD日 HH:mm:ss');
                         table.id = item.id
                         table.author = item.author;
                         table.title = item.title;
@@ -94,6 +103,12 @@ import moment from 'moment';
         handleSizeChange( size ) {
             this.size = size;
             this.handleGetArticle( 1 );
+        },
+        handleEdit( rowData ) {
+            this.$router.push( { name: 'writeanarticle', params: { articleID: rowData.id } } );
+        },
+        handleDelete( rowData ) {
+
         }
     },
     created() {

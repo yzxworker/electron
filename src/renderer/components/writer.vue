@@ -13,7 +13,8 @@
             <VueEditor v-model="content" class="editor" placeholder="请输入文章"></VueEditor>
         </el-main>
         <el-footer>
-            <el-button type="primary" @click="handleSubmit">发表文章</el-button>
+            <el-button v-if="revamp" type="primary" @click="handleAmend">修改文章</el-button>
+            <el-button v-else type="primary" @click="handleSubmit">发表文章</el-button>
         </el-footer>
     </el-container>
 </template>
@@ -37,7 +38,24 @@ import { VueEditor } from 'vue2-editor'
                         message: data.data.msg,
                         type: 'success'
                     });
-                // this.$router.push('/home/showarticle/');
+                this.$router.push( { name: 'ArticlePage', params: { articleID: data.data.id } } );
+                }
+            } )
+        },
+        handleAmend() {
+            this.axios.post('/article/update',{
+                title: this.title,
+                content: this.content,
+                id: this.articleID
+            })
+            .then( (data) => {
+                console.log( data.data );
+                if( data.data.state ) {
+                    this.$message({
+                        showClose: true,
+                        message: data.data.msg,
+                        type: 'success'
+                    });
                 this.$router.push( { name: 'ArticlePage', params: { articleID: data.data.id } } );
                 }
             } )
@@ -46,7 +64,24 @@ import { VueEditor } from 'vue2-editor'
     data() {
         return {
             content: '',
-            title: ''
+            title: '',
+            revamp: false,
+            articleID: ''
+        }
+    },
+    created() {
+        const articleID = this.$route.params.articleID;
+        if( articleID ) {
+            this.revamp = true;
+            this.articleID = articleID;
+            this.axios.post('/article/getArticle',{
+                id: articleID
+            })
+            .then( (data) => {
+                const result = data.data.msg;
+                this.content = result.content;
+                this.title = result.title;
+            } )
         }
     }
   }

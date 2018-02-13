@@ -18,7 +18,8 @@ const routes = [
           component: BaseList
         },
         {
-          path: '/home/writeanarticle',
+          path: '/home/writeanarticle/',
+          name: 'writeanarticle',
           component: Writer
         },
         {

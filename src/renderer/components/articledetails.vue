@@ -15,6 +15,7 @@
 </template>
 
 <script>
+  import moment from 'moment';
   export default {
     name: 'articledetails',
     methods: {
@@ -34,6 +35,8 @@
             })
             .then( (data) => {
                 const result = data.data.msg;
+                console.log( data );
+                result.time = moment(result.time).format('YYYY年MM月DD日 HH:mm:ss')
                 this.article = result;
             } )
         }
